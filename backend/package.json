@@ -1,0 +1,14 @@
+{
+  "name": "veterinaria-backend",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "express-session": "^1.6.0",
+    "sqlite3": "^5.0.1",
+    "node-thermal-printer": "^4.6.0"
+  }
+}
