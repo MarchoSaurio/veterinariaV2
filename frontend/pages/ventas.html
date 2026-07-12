@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Punto de Venta - Veterinaria</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛒 Punto de Venta</h1>
+            <nav>
+                <a href="inventario.html">📦 Inventario</a>
+                <a href="ventas.html" class="active">🛒 Ventas</a>
+                <a href="login.html">🚪 Salir</a>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Tabs para POS y Historial -->
+            <div class="tabs-container">
+                <div class="tabs-header">
+                    <button id="tab-pos" class="tab-btn active">🛒 Punto de Venta</button>
+                    <button id="tab-historial" class="tab-btn">📊 Historial de Ventas</button>
+                </div>
+                <div id="tab-pos-content" class="tab-content active">
+                    <div class="venta-container">
+                        <!-- Panel de búsqueda y escaneo -->
+                        <div class="panel-busqueda">
+                            <h2>Agregar Productos</h2>
+
+                            <!-- Escáner de código de barras -->
+                            <div class="scanner-section">
+                                <label for="scanner">Escanear Código de Barras:</label>
+                                <input type="text" id="scanner" placeholder="Escanee el código de barras..." autofocus>
+                                <button id="btn-limpiar-scanner">Limpiar</button>
+                            </div>
+
+                            <!-- Búsqueda manual -->
+                            <div class="busqueda-section">
+                                <label for="busqueda">Buscar Producto:</label>
+                                <input type="text" id="busqueda" placeholder="Nombre o código del producto...">
+                                <button id="btn-buscar">Buscar</button>
+                            </div>
+
+                            <!-- Resultados de búsqueda -->
+                            <div id="resultados-busqueda" class="resultados-busqueda">
+                                <!-- Los resultados se mostrarán aquí -->
+                            </div>
+                        </div>
+
+                        <!-- Carrito de compras -->
+                        <div class="panel-carrito">
+                            <h2>Carrito de Compras</h2>
+
+                            <div id="carrito-vacio" class="carrito-vacio">
+                                <p>El carrito está vacío</p>
+                                <p>Agregue productos escaneando códigos o buscando manualmente</p>
+                            </div>
+
+                            <div id="carrito-items" class="carrito-items" style="display: none;">
+                                <div class="carrito-header">
+                                    <span>Producto</span>
+                                    <span>Precio</span>
+                                    <span>Cantidad</span>
+                                    <span>Subtotal</span>
+                                    <span>Acciones</span>
+                                </div>
+
+                                <div id="lista-carrito">
+                                    <!-- Los items del carrito se mostrarán aquí -->
+                                </div>
+
+                                <div class="carrito-total">
+                                    <div class="total-line">
+                                        <strong>Total: $<span id="total-carrito">0.00</span></strong>
+                                    </div>
+                                </div>
+
+                                <div class="carrito-acciones">
+                                    <button id="btn-finalizar-venta" class="btn-primary">Finalizar Venta</button>
+                                    <button id="btn-limpiar-carrito" class="btn-secondary">Limpiar Carrito</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="tab-historial-content" class="tab-content">
+                    <div class="historial-container">
+                        <!-- Resumen Diario -->
+                        <div class="resumen-cards">
+                            <div class="resumen-card">
+                                <h3 id="total-hoy">Cargando...</h3>
+                                <p>Total Vendido</p>
+                            </div>
+                            <div class="resumen-card">
+                                <h3 id="ventas-hoy">0</h3>
+                                <p>Ventas totales</p>
+                            </div>
+                            <div class="resumen-card">
+                                <h3 id="promedio-hoy">$0.00</h3>
+                                <p>Promedio por Venta</p>
+                            </div>
+                        </div>
+
+                        <!-- Filtros -->
+                        <div class="filtros-section">
+                            <h3>Filtros por Fecha</h3>
+                            <div class="filtros-row">
+                                <div>
+                                    <label for="fecha-inicio">Desde:</label>
+                                    <input type="date" id="fecha-inicio" max="">
+                                </div>
+                                <div>
+                                    <label for="fecha-fin">Hasta:</label>
+                                    <input type="date" id="fecha-fin">
+                                </div>
+                                <button id="btn-filtrar" class="btn-primary">Filtrar</button>
+                                <button id="btn-hoy" class="btn-secondary">Hoy</button>
+                                <button id="btn-limpiar-filtros" class="btn-secondary">Limpiar</button>
+                            </div>
+                        </div>
+
+                        <!-- Tabla de Ventas -->
+                        <div class="tabla-ventas">
+                            <h3>Ventas <span id="ventas-count">(0)</span></h3>
+                            <div class="table-container">
+                                <table id="tabla-ventas">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Fecha</th>
+                                            <th>Total</th>
+                                            <th>Usuario</th>
+                                            <th>Items</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal de selección de método de pago -->
+    <div id="modal-metodo-pago" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3>Seleccionar Método de Pago</h3>
+            <div class="metodo-pago-options">
+                <label class="metodo-option">
+                    <input type="radio" name="metodo_pago" value="efectivo" checked>
+                    <span>Efectivo 💵</span>
+                </label>
+                <label class="metodo-option">
+                    <input type="radio" name="metodo_pago" value="tarjeta">
+                    <span>Tarjeta 💳</span>
+                </label>
+                <label class="metodo-option">
+                    <input type="radio" name="metodo_pago" value="transferencia">
+                    <span>Transferencia 🏦</span>
+                </label>
+            </div>
+
+            <div class="modal-actions">
+                <button id="btn-seleccionar-metodo" class="btn-primary">Seleccionar Método</button>
+                <button id="btn-cancelar-metodo" class="btn-secondary">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de pago en efectivo -->
+    <div id="modal-pago-efectivo" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3>Pago en Efectivo</h3>
+            <div class="pago-efectivo-section">
+                <div class="total-info">
+                    <p><strong>Total a pagar: $<span id="total-pagar-efectivo">0.00</span></strong></p>
+                </div>
+                <label for="cantidad_pagada">Cantidad Pagada:</label>
+                <input type="number" id="cantidad_pagada" step="0.01" placeholder="0.00" min="0">
+                <div class="cambio-info">
+                    <p>Cambio: $<span id="cambio-calculado">0.00</span></p>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button id="btn-procesar-efectivo" class="btn-primary">Procesar Pago</button>
+                <button id="btn-volver-metodo" class="btn-secondary">Volver</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación tarjeta/transferencia -->
+    <div id="modal-confirmacion-pago" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3 id="titulo-confirmacion-pago">Confirmar Pago</h3>
+            <div class="confirmacion-pago-content">
+                <div class="metodo-seleccionado">
+                    <p><strong>Método de Pago:</strong> <span id="metodo-seleccionado-text"></span></p>
+                    <p><strong>Total a pagar:</strong> $<span id="total-confirmacion">0.00</span></p>
+                </div>
+
+                <div id="instrucciones-pago">
+                    <!-- Aquí se mostrarán las instrucciones específicas para cada método -->
+                </div>
+
+                <div class="confirmacion-inputs">
+                    <label for="referencia_pago">Referencia/Número de transacción:</label>
+                    <input type="text" id="referencia_pago" placeholder="Ingrese referencia...">
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button id="btn-confirmar-pago-final" class="btn-primary">Confirmar Pago</button>
+                <button id="btn-volver-metodo-confirmacion" class="btn-secondary">Volver</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación de venta (ÚNICO) -->
+    <div id="modal-confirmacion" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3>Confirmar Venta</h3>
+            <div id="resumen-venta">
+                <!-- El resumen se mostrará aquí -->
+            </div>
+            <div id="info-pago" class="info-pago">
+                <!-- La información de pago se mostrará aquí -->
+            </div>
+            <div class="modal-actions">
+                <button id="btn-confirmar-venta" class="btn-primary">Confirmar Venta</button>
+                <button id="btn-cancelar-venta" class="btn-secondary">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación de impresión -->
+    <div id="modal-imprimir-ticket" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3>🖨️ Imprimir Ticket</h3>
+            <p>¿Desea imprimir el ticket de esta venta?</p>
+            <div class="modal-actions">
+                <button id="btn-imprimir-si" class="btn-primary">Sí, imprimir</button>
+                <button id="btn-imprimir-no" class="btn-secondary">No, gracias</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/ventas.js"></script>
+</body>
+</html>
