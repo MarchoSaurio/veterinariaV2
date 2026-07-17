@@ -5,21 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Punto de Venta - Veterinaria</title>
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/sales.css">
 </head>
-<body>
-    <div class="container">
-        <header>
-            <h1>🛒 Punto de Venta</h1>
-            <nav>
-                <a href="inventario.html">📦 Inventario</a>
-                <a href="ventas.html" class="active">🛒 Ventas</a>
-                <a href="login.html">🚪 Salir</a>
+<body class="app-shell">
+    <div class="page-shell">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-mark">
+                    <img src="../image.png" alt="Logo de la clínica">
+                </div>
+                <div>
+                    <strong>VetCare POS</strong>
+                    <span>Clínica Veterinaria</span>
+                </div>
+            </div>
+            <nav class="nav-section">
+                <a class="nav-link" href="ventas.html"><span>📊</span> Dashboard</a>
+                <a class="nav-link active" href="ventas.html"><span>🛒</span> Punto de Venta</a>
+                <a class="nav-link" href="inventario.html"><span>📦</span> Inventario</a>
+                <a class="nav-link" href="login.html"><span>🚪</span> Salir</a>
             </nav>
-        </header>
+            <div class="sidebar-footer">
+                <div class="user-card">
+                    <div class="avatar">DR</div>
+                    <div>
+                        <strong>Dr. Rivera</strong>
+                        <span>Administrador</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
 
-        <main>
-            <!-- Tabs para POS y Historial -->
-            <div class="tabs-container">
+        <div class="content-area">
+            <div class="topbar">
+                <div class="topbar__title">
+                    <span class="eyebrow">🩺 Clínica Veterinaria</span>
+                    <h2>Punto de Venta</h2>
+                </div>
+                <div class="topbar__actions">
+                    <button class="sidebar-toggle" type="button" onclick="toggleSidebar()" aria-label="Toggle sidebar">☰</button>
+                    <button class="icon-btn" type="button">🔔</button>
+                    <button class="icon-btn" type="button">⚙️</button>
+                </div>
+            </div>
+
+            <main class="page-content">
+                <div class="hero-card">
+                    <div>
+                        <span class="hero-badge">Atención integral</span>
+                        <h1>Gestiona ventas y pacientes con más claridad</h1>
+                        <p>Una experiencia de caja pensada para combinar velocidad operativa con una imagen premium para tu clínica.</p>
+                    </div>
+                </div>
+
+                <!-- Tabs para POS y Historial -->
+                <div class="tabs-container">
                 <div class="tabs-header">
                     <button id="tab-pos" class="tab-btn active">🛒 Punto de Venta</button>
                     <button id="tab-historial" class="tab-btn">📊 Historial de Ventas</button>
@@ -145,7 +185,8 @@
                     </div>
                 </div>
             </div>
-        </main>
+            </main>
+        </div>
     </div>
 
     <!-- Modal de selección de método de pago -->
@@ -253,5 +294,23 @@
     </div>
 
     <script src="../js/ventas.js"></script>
+    <script>
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        const backdrop = document.querySelector('.sidebar-backdrop');
+        if (!sidebar) return;
+        const isOpen = sidebar.classList.toggle('is-open');
+        if (backdrop) {
+            backdrop.classList.toggle('is-visible', isOpen);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const backdrop = document.createElement('div');
+        backdrop.className = 'sidebar-backdrop';
+        backdrop.onclick = toggleSidebar;
+        document.body.appendChild(backdrop);
+    });
+    </script>
 </body>
 </html>

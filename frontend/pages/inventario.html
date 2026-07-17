@@ -1,104 +1,201 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventario</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        input, select, button { margin: 4px 0; padding: 8px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 12px; }
-        th, td { padding: 8px; border: 1px solid #ddd; text-align: left; }
-        th { background: #f0f0f0; }
-        .actions button { margin-right: 4px; font-size: 12px; }
-        .status { margin-top: 8px; color: #333; }
-        .tabs { margin: 20px 0; }
-        .tab-btn { padding: 10px 15px; margin-right: 5px; cursor: pointer; background: #ddd; border: none; }
-        .tab-btn.active { background: #4CAF50; color: white; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .inactivo { opacity: 0.6; }
-    </style>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/inventory.css">
 </head>
-<body>
+<body class="app-shell">
+    <div class="page-shell">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-mark">
+                    <img src="../image.png" alt="Logo de la clínica">
+                </div>
+                <div>
+                    <strong>VetCare POS</strong>
+                    <span>Clínica Veterinaria</span>
+                </div>
+            </div>
+            <nav class="nav-section">
+                <a class="nav-link" href="ventas.html"><span>📊</span> Dashboard</a>
+                <a class="nav-link" href="ventas.html"><span>🛒</span> Punto de Venta</a>
+                <a class="nav-link active" href="inventario.html"><span>📦</span> Inventario</a>
+                <a class="nav-link" href="login.html"><span>🚪</span> Salir</a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-card">
+                    <div class="avatar">DR</div>
+                    <div>
+                        <strong>Dr. Rivera</strong>
+                        <span>Administrador</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
 
-<h2>Inventario</h2>
+        <div class="content-area">
+            <div class="topbar">
+                <div class="topbar__title">
+                    <span class="eyebrow">📦 Inventario</span>
+                    <h2>Gestión de productos</h2>
+                </div>
+                <div class="topbar__actions">
+                    <button class="sidebar-toggle" type="button" onclick="toggleSidebar()" aria-label="Toggle sidebar">☰</button>
+                    <button class="icon-btn" type="button">🔔</button>
+                    <button class="icon-btn" type="button">⚙️</button>
+                </div>
+            </div>
 
-<div class="tabs">
-    <button class="tab-btn active" onclick="mostrarTab('activos', event)">Productos Activos</button>
-    <button class="tab-btn" onclick="mostrarTab('inactivos', event)">Productos Inactivos</button>
-</div>
+            <main class="page-content inventory-shell">
+                <div class="hero-card">
+                    <div>
+                        <span class="hero-badge">Stock y pedidos</span>
+                        <h1>Controla inventario con una vista más clara</h1>
+                        <p>Prioriza productos, seguimiento de stock y alertas para mantener el cuidado de tus pacientes sin interrupciones.</p>
+                    </div>
+                </div>
 
-<div id="activos" class="tab-content active">
-    <div>
-        <label>Buscar:</label><br>
-        <input id="filtroBusqueda" placeholder="Nombre o código" style="width: 220px;">
-        <select id="filtroTipo" style="width: 140px;">
-            <option value="">Todos los tipos</option>
-        </select>
-        <label><input id="filtroStockBajo" type="checkbox"> Stock bajo</label>
-        <button onclick="buscarProductos()">Buscar</button>
-        <button onclick="limpiarFiltros()">Limpiar</button>
+                <div class="tabs-container">
+                <div class="tabs-header">
+                    <button class="tab-btn active" onclick="mostrarTab('activos', event)">Productos Activos</button>
+                    <button class="tab-btn" onclick="mostrarTab('inactivos', event)">Productos Inactivos</button>
+                </div>
+                <div id="activos" class="tab-content active">
+                    <div class="inventory-toolbar">
+                        <div class="inventory-filters">
+                            <label class="form-group">
+                                <span>Buscar</span>
+                                <input id="filtroBusqueda" placeholder="Nombre o código">
+                            </label>
+                            <label class="form-group">
+                                <span>Tipo</span>
+                                <select id="filtroTipo">
+                                    <option value="">Todos los tipos</option>
+                                </select>
+                            </label>
+                            <label class="status-badge">
+                                <input id="filtroStockBajo" type="checkbox"> Stock bajo
+                            </label>
+                        </div>
+                        <div class="inventory-actions">
+                            <button class="btn btn-primary" onclick="buscarProductos()">Buscar</button>
+                            <button class="btn btn-secondary" onclick="limpiarFiltros()">Limpiar</button>
+                        </div>
+                    </div>
+
+                    <div class="inventory-card">
+                        <h3 id="formTitle">Agregar producto</h3>
+                        <div class="grid grid-2">
+                            <label class="form-group">
+                                <span>Nombre</span>
+                                <input id="nombre" placeholder="Nombre">
+                            </label>
+                            <label class="form-group">
+                                <span>Código de barras</span>
+                                <input id="codigo" placeholder="Código de barras">
+                            </label>
+                            <label class="form-group">
+                                <span>Precio</span>
+                                <input id="precio" placeholder="Precio" type="number" step="0.01">
+                            </label>
+                            <label class="form-group">
+                                <span>Precio costo</span>
+                                <input id="precioCosto" placeholder="Precio costo" type="number" step="0.01">
+                            </label>
+                            <label class="form-group">
+                                <span>Stock</span>
+                                <input id="stock" placeholder="Stock" type="number">
+                            </label>
+                            <label class="form-group">
+                                <span>Stock mínimo</span>
+                                <input id="stockMinimo" placeholder="Stock mínimo" type="number">
+                            </label>
+                            <label class="form-group">
+                                <span>Tipo</span>
+                                <select id="tipo">
+                                    <option value="">Seleccionar tipo</option>
+                                    <option value="medicamento">Medicamento</option>
+                                    <option value="alimento">Alimento</option>
+                                    <option value="accesorio">Accesorio</option>
+                                    <option value="higiene">Higiene</option>
+                                    <option value="juguete">Juguete</option>
+                                    <option value="suplemento">Suplemento</option>
+                                    <option value="otro">Otro</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="inventory-actions">
+                            <button id="guardarBtn" class="btn btn-primary" onclick="guardarProducto()">Agregar</button>
+                            <button class="btn btn-secondary" onclick="cancelarEdicion()" type="button">Cancelar</button>
+                        </div>
+                        <div class="status" id="mensaje"></div>
+                    </div>
+
+                    <div class="inventory-table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Código</th>
+                                    <th>Precio</th>
+                                    <th>Stock</th>
+                                    <th>Stock mínimo</th>
+                                    <th>Tipo</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="lista"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="inactivos" class="tab-content">
+                    <div class="inventory-toolbar">
+                        <h3>Productos dados de baja</h3>
+                        <button class="btn btn-secondary" onclick="cargarInactivos()">Refrescar</button>
+                    </div>
+                    <div class="inventory-table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Código</th>
+                                    <th>Precio</th>
+                                    <th>Stock</th>
+                                    <th>Tipo</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="listaInactivos"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            </main>
+        </div>
     </div>
 
-    <hr>
+    <script src="../js/inventario.js"></script>
+    <script>
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        const backdrop = document.querySelector('.sidebar-backdrop');
+        if (!sidebar) return;
+        const isOpen = sidebar.classList.toggle('is-open');
+        if (backdrop) {
+            backdrop.classList.toggle('is-visible', isOpen);
+        }
+    }
 
-    <div>
-        <h3 id="formTitle">Agregar producto</h3>
-        <input id="nombre" placeholder="Nombre" style="width: 220px;"><br>
-        <input id="codigo" placeholder="Código de barras" style="width: 220px;"><br>
-        <input id="precio" placeholder="Precio" type="number" step="0.01" style="width: 220px;"><br>
-        <input id="precioCosto" placeholder="Precio costo" type="number" step="0.01" style="width: 220px;"><br>
-        <input id="stock" placeholder="Stock" type="number" style="width: 220px;"><br>
-        <input id="stockMinimo" placeholder="Stock mínimo" type="number" style="width: 220px;"><br>
-        <select id="tipo" style="width: 220px;">
-            <option value="">Seleccionar tipo</option>
-            <option value="medicamento">Medicamento</option>
-            <option value="alimento">Alimento</option>
-            <option value="accesorio">Accesorio</option>
-            <option value="higiene">Higiene</option>
-            <option value="juguete">Juguete</option>
-            <option value="suplemento">Suplemento</option>
-            <option value="otro">Otro</option>
-        </select><br>
-        <button id="guardarBtn" onclick="guardarProducto()">Agregar</button>
-        <button onclick="cancelarEdicion()" type="button">Cancelar</button>
-        <div class="status" id="mensaje"></div>
-    </div>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Código</th>
-                <th>Precio</th>
-                <th>Stock</th>
-                <th>Stock mínimo</th>
-                <th>Tipo</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody id="lista"></tbody>
-    </table>
-</div>
-
-<div id="inactivos" class="tab-content">
-    <h3>Productos Dados de Baja</h3>
-    <button onclick="cargarInactivos()">Refrescar</button>
-    <table>
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Código</th>
-                <th>Precio</th>
-                <th>Stock</th>
-                <th>Tipo</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody id="listaInactivos"></tbody>
-    </table>
-</div>
-
-<script src="../js/inventario.js"></script>
-
+    document.addEventListener('DOMContentLoaded', () => {
+        const backdrop = document.createElement('div');
+        backdrop.className = 'sidebar-backdrop';
+        backdrop.onclick = toggleSidebar;
+        document.body.appendChild(backdrop);
+    });
+    </script>
 </body>
 </html>

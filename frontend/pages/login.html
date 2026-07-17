@@ -1,37 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/veterinary.css">
 </head>
-<body>
+<body class="app-shell">
+    <div class="login-stage">
+        <div class="login-card">
+            <div class="login-hero">
+                <div class="login-logo">
+                    <img src="../image.png" alt="Logo de la clínica veterinaria">
+                </div>
+                <div>
+                    <h2>Clínica Veterinaria</h2>
+                    <p>Panel de gestión profesional</p>
+                </div>
+                <div class="login-branding">
+                    <span class="paw-accent">🐾</span>
+                    <span>Atención integral para mascotas y familias</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="username">Usuario</label>
+                <input id="username" placeholder="Usuario">
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input id="password" type="password" placeholder="Contraseña">
+            </div>
+            <button class="btn btn-primary" onclick="login()">Entrar al sistema</button>
+        </div>
+    </div>
 
-<h2>Login</h2>
-
-<input id="username" placeholder="Usuario">
-<input id="password" type="password" placeholder="Contraseña">
-<button onclick="login()">Entrar</button>
-
-<!-- 👇 AQUÍ VA EL SCRIPT -->
-<script>
-function login() {
-    fetch('/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            username: document.getElementById('username').value,
-            password: document.getElementById('password').value
+    <script>
+    function login() {
+        fetch('/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                username: document.getElementById('username').value,
+                password: document.getElementById('password').value
+            })
         })
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.user) {
-            window.location.href = "/pages/ventas.html";
-        } else {
-            alert("Error: " + data.message);
-        }
-    });
-}
-</script>
-
+        .then(res => res.json())
+        .then(data => {
+            if (data.user) {
+                window.location.href = "/pages/ventas.html";
+            } else {
+                alert("Error: " + data.message);
+            }
+        });
+    }
+    </script>
 </body>
 </html>
