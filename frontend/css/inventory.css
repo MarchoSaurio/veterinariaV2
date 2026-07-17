@@ -1,0 +1,80 @@
+/* inventory.css - Estilos para gestión de inventario y stock */
+
+.inventory-shell {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.inventory-toolbar,
+.inventory-card,
+.inventory-actions {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-4);
+}
+
+.inventory-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.inventory-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.inventory-table-wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.stock-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+}
+
+.stock-pill.low {
+  background: rgba(229, 83, 83, 0.12);
+  color: var(--color-danger);
+}
+
+.stock-pill.medium {
+  background: rgba(244, 185, 66, 0.16);
+  color: var(--color-warning);
+}
+
+.stock-pill.good {
+  background: rgba(47, 191, 113, 0.13);
+  color: var(--color-success);
+}
+
+.inventory-empty {
+  padding: var(--space-5);
+  text-align: center;
+  color: var(--color-text-secondary);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-alt);
+}
+
+@media (max-width: 768px) {
+  .inventory-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

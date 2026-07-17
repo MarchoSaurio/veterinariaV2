@@ -1,0 +1,82 @@
+/* patients.css - Estilos para fichas clínicas, pacientes y consultas */
+
+.patient-shell {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.patient-grid {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+}
+
+.patient-card,
+.record-card,
+.consult-card,
+.vaccination-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-4);
+}
+
+.profile-summary {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.patient-avatar {
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(47, 111, 237, 0.16), rgba(126, 200, 227, 0.24));
+  color: var(--color-primary);
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+}
+
+.timeline {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.timeline-item {
+  padding: var(--space-3);
+  border-left: 3px solid var(--color-accent);
+  padding-left: var(--space-4);
+  background: var(--color-surface-alt);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  background: rgba(47, 111, 237, 0.1);
+  color: var(--color-primary);
+}
+
+.status-badge.success {
+  background: rgba(47, 191, 113, 0.12);
+  color: var(--color-success);
+}
+
+.status-badge.warning {
+  background: rgba(244, 185, 66, 0.16);
+  color: var(--color-warning);
+}
+
+@media (max-width: 992px) {
+  .patient-grid {
+    grid-template-columns: 1fr;
+  }
+}

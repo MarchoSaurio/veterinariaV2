@@ -1,0 +1,136 @@
+/* dashboard.css - Estilos especializados para vistas de tablero y métricas */
+
+:root {
+  --dashboard-card-radius: 1.25rem;
+  --dashboard-card-shadow: 0 16px 40px rgba(17, 24, 39, 0.08);
+}
+
+.dashboard-shell {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.kpi-card,
+.chart-card,
+.widget-card,
+.activity-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--dashboard-card-radius);
+  box-shadow: var(--dashboard-card-shadow);
+  padding: var(--space-4);
+}
+
+.kpi-card {
+  display: grid;
+  gap: var(--space-2);
+  min-height: 140px;
+  position: relative;
+  overflow: hidden;
+}
+
+.kpi-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+}
+
+.kpi-card .kpi-label {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.kpi-card .kpi-value {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.kpi-card .kpi-trend {
+  color: var(--color-success);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.dashboard-row {
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr;
+  gap: var(--space-5);
+}
+
+.chart-card {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.chart-placeholder {
+  min-height: 220px;
+  border-radius: var(--radius-lg);
+  border: 1px dashed var(--color-border);
+  background: linear-gradient(135deg, rgba(47, 111, 237, 0.08), rgba(126, 200, 227, 0.12));
+  display: grid;
+  place-items: center;
+  color: var(--color-text-secondary);
+  font-weight: 600;
+}
+
+.widget-list,
+.activity-list {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.widget-item,
+.activity-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-alt);
+}
+
+.activity-item strong {
+  color: var(--color-text-primary);
+}
+
+.summary-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(47, 111, 237, 0.12);
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+@media (max-width: 1200px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dashboard-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
